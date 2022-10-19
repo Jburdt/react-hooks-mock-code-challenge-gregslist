@@ -7,13 +7,15 @@ function App() {
 const [listings, setListings] = useState([])
 const [searchTerm, setSearchTerm] = useState("")
 
-//Search filter!
-const filteredTerms = () => {
-  return listings.filter((listObj) => ( listObj.description.toLowerCase().includes(searchTerm.toLowerCase()) || searchTerm === "")) 
+//Search filter then pass to the original state
+const filteredTerms = listings.filter((listObj) => { 
+  return listObj.description.toLowerCase().includes(searchTerm.toLowerCase())
+})
+
+const clickSubmit = (term) => {
+  setSearchTerm(term)
 }
 
-// console.log(searchTerm)
-// console.log(filteredTerms())
 
 //grabs form api to put on page
 useEffect(() => {
@@ -31,8 +33,8 @@ const handleDelete = (id) => {
 // console.log(listings)
   return (
     <div className="app">
-      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <ListingsContainer handleDelete={handleDelete} listings={filteredTerms()} />
+      <Header clickSubmit={clickSubmit} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <ListingsContainer handleDelete={handleDelete} listings={filteredTerms} />
     </div>
   );
 }
